@@ -14,7 +14,7 @@ def play():
     # Prompt user
     ans = input(print("Do you want to play Blackjack? Type 'y' or 'n': "))
 
-    # Start game
+    # Start user's turn
     while ans == 'y':
         # Give user cards
         for i in range(2):
@@ -24,35 +24,57 @@ def play():
         dealer_hand.append(int(random.choice(cards)))
 
         # Calculate score
-        user_score = 0
-        for card in range(len(user_hand)):
-            user_score += user_hand[card]
+        user_score = sum(user_hand)
 
         # Print results for user to continue
         print(f"Your cards: are {user_hand}. Your score is {user_score}")
         print(f"Computer's first card: {dealer_hand[0]}")
 
-        # User's turn
-        turn_over = False # Bool to hold turn status
-        while turn_over == False: 
-            # Prompt user
-            cont = input("Type 'y' to get another card, or 'n' to pass")
-            # If yes
-            if cont == 'y':
-                user_hand.append(int(random.choice(cards))) # Give card
+        another_card(user_score, user_hand)
+        ans = 'n'
+        # # User's turn
+        # turn_over = False # Bool to hold turn status
+        # while turn_over == False: 
+        #     # Prompt user
+        #     cont = input("Type 'y' to get another card, or 'n' to pass ")
+        #     # If yes
+        #     if cont == 'y':
+        #         # Give card
+        #         user_hand.append(int(random.choice(cards)))
 
-                # Calculate results
-                user_score = 0
-                for card in range(len(user_hand)):
-                    user_score += card
+        #         # Calculate results
+        #         user_score = sum(user_hand)
 
-                # Check user's hand validity
-                if user_hand > 21:
-                    print("Your score is over 21. You lose")
+        #         # Check user's hand validity
+        #         if user_hand > 21:
+        #             print(f"Your final hand: {user_hand}. Final score {user_score}")
+        #         else:
 
-                
-                #print(f"Your cards: are {user_hand}. Your score is {user_score}") # Print results
+def another_card(score, hand):
+    # User's turn
+    turn_over = False # Bool to hold turn status
 
+    while turn_over == False: 
+        # Prompt user
+        cont = input("Type 'y' to get another card, or 'n' to pass ")
+        # If yes
+        if cont == 'y':
+            # Give card
+            hand.append(int(random.choice(cards)))
+        else:
+            turn_over = True
+
+        # Calculate results
+        score = sum(hand)
+
+        # Check user's hand validity
+        if score > 21:
+            print(f"Your final hand: {hand}. Final score: {score}.")
+            print("You went over 21. You lose.")
+            turn_over = True
+        else:
+            print(f"Your cards: are {hand}. Your score is {score}")
+            another_card(score, hand)
 
 
 
