@@ -30,25 +30,9 @@ def play():
         print(f"Your cards: are {user_hand}. Your score is {user_score}")
         print(f"Computer's first card: {dealer_hand[0]}")
 
+        # Give user option for another card
         another_card(user_score, user_hand)
         ans = 'n'
-        # # User's turn
-        # turn_over = False # Bool to hold turn status
-        # while turn_over == False: 
-        #     # Prompt user
-        #     cont = input("Type 'y' to get another card, or 'n' to pass ")
-        #     # If yes
-        #     if cont == 'y':
-        #         # Give card
-        #         user_hand.append(int(random.choice(cards)))
-
-        #         # Calculate results
-        #         user_score = sum(user_hand)
-
-        #         # Check user's hand validity
-        #         if user_hand > 21:
-        #             print(f"Your final hand: {user_hand}. Final score {user_score}")
-        #         else:
 
 def another_card(score, hand):
     # User's turn
