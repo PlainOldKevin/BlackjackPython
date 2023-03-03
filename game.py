@@ -1,6 +1,7 @@
 # Imports
 import random
 import art
+import os
 
 # Function to calculate score and check for blackjack
 def calculate_score(list_of_cards):
@@ -96,5 +97,6 @@ def play():
 
 # Replay option
 while input("Do you want to play a game of Blackjack? Type 'y' or 'n': ") == 'y':
+    os.system('cls' if os.name == 'nt' else 'clear')
     play()
 
