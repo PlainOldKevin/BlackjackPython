@@ -24,7 +24,6 @@ def deal_card():
     card = random.choice(cards)
     return card
 
-
 # User and dealer's hands
 user_hand = []
 dealer_hand = []
@@ -59,4 +58,14 @@ while is_game_over == False:
         print("Dealer has Blackjack. You lose.")
         is_game_over = True
     else:
-        is_game_over = True
+        draw = True
+        while draw:
+            another_card = input("Do you want to draw another card? Type 'y' or 'n'. ")
+            if another_card == 'y':
+                user_hand.append(deal_card())
+                user_score = calculate_score(user_hand)
+                print(f"Your cards: {user_hand}. Current score: {user_score}")
+            else:
+                draw = False
+                is_game_over = True
+
