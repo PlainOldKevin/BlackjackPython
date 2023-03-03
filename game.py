@@ -1,8 +1,6 @@
 # Imports
 import random
-
-# List of cards for game :)
-cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+import art
 
 # Function to calculate score and check for blackjack
 def calculate_score(list_of_cards):
@@ -24,6 +22,27 @@ def deal_card():
     card = random.choice(cards)
     return card
 
+# Function to compare scores at end of game
+def compare(user_score, dealer_score):
+    if user_score == dealer_score:
+        return "You and the dealer have the same score. It's a draw."
+    elif dealer_score == 0:
+        return "Dealer has Blackjack, you lose."
+    elif user_score == 0:
+        return "You have 21. You win."
+    elif user_score > 21:
+        return "You went over 21. You lose"
+    elif dealer_score > 21:
+        return "Dealer busted. You win."
+    elif user_score > dealer_score:
+        return "You win!"
+    else:
+        return "You lose."
+
+
+# Start game
+print(art.logo)
+
 # User and dealer's hands
 user_hand = []
 dealer_hand = []
@@ -36,7 +55,7 @@ for _ in range (2):
     user_hand.append(deal_card())
     dealer_hand.append(deal_card())
 
-# Start game
+# Start user's turn
 while not is_game_over:
         
     # Calculate scores of the players
@@ -51,12 +70,6 @@ while not is_game_over:
     if user_score == 0 and dealer_score == 0:
         print("You and the dealer both have Blackjack. Push.")
         is_game_over = True
-    elif user_score == 0:
-        print("You have Blackjack. You win!")
-        is_game_over = True
-    elif dealer_score == 0:
-        print("Dealer has Blackjack. You lose.")
-        is_game_over = True
     elif user_score > 21:
         print("You went over 21. You lose.")
         is_game_over = True
@@ -67,4 +80,14 @@ while not is_game_over:
             user_score = calculate_score(user_hand)
         else:
             is_game_over = True
+
+# Dealer's turn            
+while dealer_score != 0 and dealer_score <= 17:
+    dealer_hand.append(deal_card())
+    dealer_score = calculate_score(dealer_hand)
+
+# End of game results
+print(f"Your final hand: {user_hand}. Final score: {user_score}")
+print(f"Dealer's final hand: {dealer_hand}. Dealer final score: {dealer_score}")
+print(compare(user_score, dealer_score))
 
