@@ -4,63 +4,59 @@ import random
 # List of cards for game :)
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
-# Function to run game
-def play():
+# Function to calculate score and check for blackjack
+def calculate_score(list_of_cards):
+    # Check ace + face card
+    if sum(list_of_cards) == 21 and len(list_of_cards) == 2:
+        return 0
+    
+    # Check if hand has ace and over 21 and change ace value
+    if 11 in list_of_cards and sum(list_of_cards) > 21:
+        list_of_cards.remove(11)
+        list_of_cards.append(1)
 
-    # User and dealer's hands
-    user_hand = []
-    dealer_hand = []
+    # Return res otherwise
+    return sum(list_of_cards)
 
-    # Prompt user
-    ans = input(print("Do you want to play Blackjack? Type 'y' or 'n': "))
-
-    # Start user's turn
-    while ans == 'y':
-        # Give user cards
-        for i in range(2):
-            user_hand.append(int(random.choice(cards)))
-        
-        # Give dealer a card
-        dealer_hand.append(int(random.choice(cards)))
-
-        # Calculate score
-        user_score = sum(user_hand)
-
-        # Print results for user to continue
-        print(f"Your cards: are {user_hand}. Your score is {user_score}")
-        print(f"Computer's first card: {dealer_hand[0]}")
-
-        # Give user option for another card
-        another_card(user_score, user_hand)
-        ans = 'n'
-
-def another_card(score, hand):
-    # User's turn
-    turn_over = False # Bool to hold turn status
-
-    while turn_over == False: 
-        # Prompt user
-        cont = input("Type 'y' to get another card, or 'n' to pass ")
-        # If yes
-        if cont == 'y':
-            # Give card
-            hand.append(int(random.choice(cards)))
-        else:
-            turn_over = True
-
-        # Calculate results
-        score = sum(hand)
-
-        # Check user's hand validity
-        if score > 21:
-            print(f"Your final hand: {hand}. Final score: {score}.")
-            print("You went over 21. You lose.")
-            turn_over = True
-        else:
-            print(f"Your cards: are {hand}. Your score is {score}")
-            another_card(score, hand)
+# Function to return a random card from the deck
+def deal_card():
+    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+    card = random.choice(cards)
+    return card
 
 
+# User and dealer's hands
+user_hand = []
+dealer_hand = []
 
-# Run game
-play()
+# Bool to keep track of game state
+is_game_over = False
+
+# Start user's turn
+while is_game_over == False:
+
+    # Deal cards
+    for _ in range (2):
+        user_hand.append(deal_card())
+        dealer_hand.append(deal_card())
+
+    # Calculate scores of the players
+    user_score = calculate_score(user_hand)
+    dealer_score = calculate_score(dealer_hand)
+
+    # Print user cards and computer's first card
+    print(f"Your cards: {user_hand}. Current score: {user_score}")
+    print(f"Dealer's first card: {dealer_hand[0]}")
+
+    # Print results or continue turn
+    if user_score == 0 and dealer_score == 0:
+        print("You and the dealer both have Blackjack. Push.")
+        is_game_over = True
+    elif user_score == 0:
+        print("You have Blackjack. You win!")
+        is_game_over = True
+    elif dealer_score == 0:
+        print("Dealer has Blackjack. You lose.")
+        is_game_over = True
+    else:
+        is_game_over = True
