@@ -41,53 +41,60 @@ def compare(user_score, dealer_score):
 
 
 # Start game
-print(art.logo)
+def play():
 
-# User and dealer's hands
-user_hand = []
-dealer_hand = []
+    # Print logo
+    print(art.logo)
 
-# Bool to keep track of game state
-is_game_over = False
+    # User and dealer's hands
+    user_hand = []
+    dealer_hand = []
 
-# Deal cards
-for _ in range (2):
-    user_hand.append(deal_card())
-    dealer_hand.append(deal_card())
+    # Bool to keep track of game state
+    is_game_over = False
 
-# Start user's turn
-while not is_game_over:
-        
-    # Calculate scores of the players
-    user_score = calculate_score(user_hand)
-    dealer_score = calculate_score(dealer_hand)
+    # Deal cards
+    for _ in range (2):
+        user_hand.append(deal_card())
+        dealer_hand.append(deal_card())
 
-    # Print user cards and computer's first card
-    print(f"Your cards: {user_hand}. Current score: {user_score}")
-    print(f"Dealer's first card: {dealer_hand[0]}")
+    # Start user's turn
+    while not is_game_over:
+            
+        # Calculate scores of the players
+        user_score = calculate_score(user_hand)
+        dealer_score = calculate_score(dealer_hand)
 
-    # Print results or continue turn
-    if user_score == 0 and dealer_score == 0:
-        print("You and the dealer both have Blackjack. Push.")
-        is_game_over = True
-    elif user_score > 21:
-        print("You went over 21. You lose.")
-        is_game_over = True
-    else:
-        another_card = input("Do you want to draw another card? Type 'y' or 'n'. ")
-        if another_card == 'y':
-            user_hand.append(deal_card())
-            user_score = calculate_score(user_hand)
-        else:
+        # Print user cards and computer's first card
+        print(f"Your cards: {user_hand}. Current score: {user_score}")
+        print(f"Dealer's first card: {dealer_hand[0]}")
+
+        # Print results or continue turn
+        if user_score == 0 and dealer_score == 0:
+            print("You and the dealer both have Blackjack. Push.")
             is_game_over = True
+        elif user_score > 21:
+            print("You went over 21. You lose.")
+            is_game_over = True
+        else:
+            another_card = input("Do you want to draw another card? Type 'y' or 'n'. ")
+            if another_card == 'y':
+                user_hand.append(deal_card())
+                user_score = calculate_score(user_hand)
+            else:
+                is_game_over = True
 
-# Dealer's turn            
-while dealer_score != 0 and dealer_score <= 17:
-    dealer_hand.append(deal_card())
-    dealer_score = calculate_score(dealer_hand)
+    # Dealer's turn            
+    while dealer_score != 0 and dealer_score <= 17:
+        dealer_hand.append(deal_card())
+        dealer_score = calculate_score(dealer_hand)
 
-# End of game results
-print(f"Your final hand: {user_hand}. Final score: {user_score}")
-print(f"Dealer's final hand: {dealer_hand}. Dealer final score: {dealer_score}")
-print(compare(user_score, dealer_score))
+    # End of game results
+    print(f"Your final hand: {user_hand}. Final score: {user_score}")
+    print(f"Dealer's final hand: {dealer_hand}. Dealer final score: {dealer_score}")
+    print(compare(user_score, dealer_score))
+
+# Replay option
+while input("Do you want to play a game of Blackjack? Type 'y' or 'n': ") == 'y':
+    play()
 
