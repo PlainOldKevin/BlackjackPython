@@ -31,14 +31,14 @@ dealer_hand = []
 # Bool to keep track of game state
 is_game_over = False
 
-# Start user's turn
-while is_game_over == False:
+# Deal cards
+for _ in range (2):
+    user_hand.append(deal_card())
+    dealer_hand.append(deal_card())
 
-    # Deal cards
-    for _ in range (2):
-        user_hand.append(deal_card())
-        dealer_hand.append(deal_card())
-
+# Start game
+while not is_game_over:
+        
     # Calculate scores of the players
     user_score = calculate_score(user_hand)
     dealer_score = calculate_score(dealer_hand)
@@ -57,15 +57,14 @@ while is_game_over == False:
     elif dealer_score == 0:
         print("Dealer has Blackjack. You lose.")
         is_game_over = True
+    elif user_score > 21:
+        print("You went over 21. You lose.")
+        is_game_over = True
     else:
-        draw = True
-        while draw:
-            another_card = input("Do you want to draw another card? Type 'y' or 'n'. ")
-            if another_card == 'y':
-                user_hand.append(deal_card())
-                user_score = calculate_score(user_hand)
-                print(f"Your cards: {user_hand}. Current score: {user_score}")
-            else:
-                draw = False
-                is_game_over = True
+        another_card = input("Do you want to draw another card? Type 'y' or 'n'. ")
+        if another_card == 'y':
+            user_hand.append(deal_card())
+            user_score = calculate_score(user_hand)
+        else:
+            is_game_over = True
 
